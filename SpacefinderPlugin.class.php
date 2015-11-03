@@ -17,7 +17,7 @@ class SpacefinderPlugin extends StudIPPlugin implements SystemPlugin {
         if ($GLOBALS['perm']->have_perm('admin')) {
             $navigation = new AutoNavigation(_('Studiengangsbelegung'));
             $navigation->setURL(PluginEngine::GetURL($this, array(), 'show/index'));
-            Navigation::addItem('tools/spacefinderplugin', $navigation);
+            Navigation::addItem('/calendar/spacefinderplugin', $navigation);
         }
     }
 
