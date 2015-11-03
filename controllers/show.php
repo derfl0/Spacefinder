@@ -67,8 +67,8 @@ WHERE $whereConditions GROUP BY termin_id";
             $stmt->execute();
             while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 for ($i = $data['date']; $i < $data['end_time']; $i += 3600) {
-                    $this->power[strftime('%u', $i)][strftime('%H', $i)] += $data['count'];
-                    $this->maxpower = max(array($this->maxpower, $this->power[strftime('%u', $i)][strftime('%H', $i)]));
+                    $this->power[strftime('%u', $i)][(int) strftime('%H', $i)] += $data['count'];
+                    $this->maxpower = max(array($this->maxpower, $this->power[strftime('%u', $i)][(int) strftime('%H', $i)]));
                 }
             }
         }
@@ -79,7 +79,7 @@ WHERE $whereConditions GROUP BY termin_id";
         // Studycourse
         $stgFilter = new SelectWidget(_('Studiengang'), $this->url_for('show/index'), 'stg');
         $stgFilter->addElement(new SelectElement('all', _('Alle')), 'select-all');
-        foreach (StudyCourse::findBySQL('1=1') as $studycourse) {
+        foreach (StudyCourse::findBySQL('1=1 ORDER BY name') as $studycourse) {
             $stgFilter->addElement(new SelectElement($studycourse->id, $studycourse->name, Request::get('stg') == $studycourse->id), 'select-' . $studycourse->id);
         }
         $sidebar->addWidget($stgFilter);
@@ -87,7 +87,7 @@ WHERE $whereConditions GROUP BY termin_id";
         // Abschluss
         $absFilter = new SelectWidget(_('Abschluss'), $this->url_for('show/index'), 'abs');
         $absFilter->addElement(new SelectElement('all', _('Alle')), 'select-all');
-        foreach (Degree::findBySQL('1=1') as $deg) {
+        foreach (Degree::findBySQL('1=1 ORDER BY name') as $deg) {
             $absFilter->addElement(new SelectElement($deg->id, $deg->name, Request::get('abs') == $deg->id), 'select-' . $deg->id);
         }
         $sidebar->addWidget($absFilter);
