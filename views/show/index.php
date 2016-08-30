@@ -17,7 +17,7 @@
         <tr>
             <td style="text-align: right"><?= $i ?>:00</td>
             <? for ($j = 1; $j <= 7; $j++): ?>
-                <td style="<?= $power[$j][$i]? "background-color: rgb(".(round(255 / $maxpower * $power[$j][$i])).", ".(round(255 - 255 / $maxpower * $power[$j][$i]))." , 70)" : '' ?>">
+                <td style="<?= $power[$j][$i]? "background-color: hsl(".(round(110 * ($maxpower - $power[$j][$i]) / $maxpower)).", 90%, 60%)" : '' ?>">
                     <?= $power[$j][$i] ?>
                 </td>
             <? endfor; ?>
